@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using LocalizationTest.Domain;
+using LocalizationTest.Domain.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace LocalizationTest.Api
@@ -38,9 +41,7 @@ namespace LocalizationTest.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             var supportedCultures = new[]
@@ -55,6 +56,9 @@ namespace LocalizationTest.Api
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });
+
+            var localizer = app.ApplicationServices.GetService<IStringLocalizer<DomainResources>>();
+            StringLocalizer.LoadStrings(localizer.GetAllStrings());
 
             app.UseEndpoints(endpoints =>
             {

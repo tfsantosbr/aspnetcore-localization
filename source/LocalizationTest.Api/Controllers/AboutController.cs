@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LocalizationTest.Domain;
+using LocalizationTest.Domain.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace LocalizationTest.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_domainLocalizer.GetString("Username"));
+            return Ok(StringLocalizer.GetString("Username"));
         }
     }
 }
