@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LocalizationTest.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -11,17 +12,23 @@ namespace LocalizationTest.Api.Controllers
     [Route("about")]
     public class AboutController : Controller
     {
-        private readonly IStringLocalizer<AboutController> _localizer;
+        private readonly IStringLocalizer<ApiResources> _apiLocalizer;
+        private readonly IStringLocalizer<DomainResources> _domainLocalizer;
 
-        public AboutController(IStringLocalizer<AboutController> localizer)
+        public AboutController(IStringLocalizer<ApiResources> apiLocalizer, IStringLocalizer<DomainResources> domainLocalizer)
         {
-            _localizer = localizer;
+            _apiLocalizer = apiLocalizer;
+            _domainLocalizer = domainLocalizer;
         }
 
         [HttpGet]
-        public string Get()
+        public IActionResult Get()
         {
-            return _localizer["Welcome"];
+            return Ok(new
+            {
+                Api = _apiLocalizer["Welcome"],
+                Domain = _domainLocalizer.GetString("Username")
+            });
         }
     }
 }
