@@ -12,23 +12,17 @@ namespace LocalizationTest.Api.Controllers
     [Route("about")]
     public class AboutController : Controller
     {
-        private readonly IStringLocalizer<ApiResources> _apiLocalizer;
         private readonly IStringLocalizer<DomainResources> _domainLocalizer;
 
-        public AboutController(IStringLocalizer<ApiResources> apiLocalizer, IStringLocalizer<DomainResources> domainLocalizer)
+        public AboutController(IStringLocalizer<DomainResources> domainLocalizer)
         {
-            _apiLocalizer = apiLocalizer;
             _domainLocalizer = domainLocalizer;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new
-            {
-                Api = _apiLocalizer["Welcome"],
-                Domain = _domainLocalizer.GetString("Username")
-            });
+            return Ok(_domainLocalizer.GetString("Username"));
         }
     }
 }
