@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using LocalizationTest.Domain;
-using LocalizationTest.Domain.Resources;
+using LocalizationTest.Domain.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace LocalizationTest.Api
 {
@@ -58,7 +51,7 @@ namespace LocalizationTest.Api
             });
 
             var localizer = app.ApplicationServices.GetService<IStringLocalizer<DomainResources>>();
-            StringLocalizer.LoadStrings(localizer.GetAllStrings());
+            ResourceLocalizer.SetLocalizer(localizer);
 
             app.UseEndpoints(endpoints =>
             {
