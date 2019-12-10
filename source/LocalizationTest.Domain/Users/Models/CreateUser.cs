@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LocalizationTest.Domain.Users.Models
 {
@@ -9,5 +8,7 @@ namespace LocalizationTest.Domain.Users.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public CreateUserAddress Address { get; set; } = new CreateUserAddress();
+
+        public IEnumerable<CreateUserPhone> Phones { get; set; } = new List<CreateUserPhone>();
     }
 }

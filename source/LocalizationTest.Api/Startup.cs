@@ -1,5 +1,4 @@
 using LocalizationTest.Domain;
-using LocalizationTest.Domain.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -51,7 +50,7 @@ namespace LocalizationTest.Api
             });
 
             var localizer = app.ApplicationServices.GetService<IStringLocalizer<DomainResources>>();
-            ResourceLocalizer.SetLocalizer(localizer);
+            DomainResources.SetLocalizer(localizer);
 
             app.UseEndpoints(endpoints =>
             {

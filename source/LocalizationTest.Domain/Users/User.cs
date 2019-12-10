@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using LocalizationTest.Domain.Helpers;
 using LocalizationTest.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,8 @@ namespace LocalizationTest.Domain.Users
 {
     public class User
     {
+        private readonly List<Phone> _phones = new List<Phone>();
+
         public User(string name, string email, Address address)
         {
             Id = Guid.NewGuid();
@@ -21,18 +22,25 @@ namespace LocalizationTest.Domain.Users
         public string Name { get; private set; }
         public string Email { get; private set; }
         public Address Address { get; private set; }
+        public IReadOnlyList<Phone> Phones => _phones.AsReadOnly();
 
         public IList<ValidationFailure> GetValidationErrors()
         {
-            var validationFailures = new List<ValidationFailure>();
-            
             var validation = new UserValidator();
             var userValidationResult = validation.Validate(this);
 
-            validationFailures.AddRange(userValidationResult.Errors);
-            validationFailures.AddRange(Address.GetValidationErrors());
+            return userValidationResult.Errors;
+        }
 
-            return validationFailures;
+        public void AddPhone(Phone phone)
+        {
+            //if (phone.GetValidationErrors() != null)
+            //{
+            //    _validationFailures.AddRange(phone.GetValidationErrors());
+            //    return;
+            //}
+
+            _phones.Add(phone);
         }
     }
 
@@ -43,14 +51,21 @@ namespace LocalizationTest.Domain.Users
             RuleFor(p => p.Name)
                 .NotEmpty()
                 .MaximumLength(100)
-                .WithName(ResourceLocalizer.GetString("Name"))
+                .WithName(DomainResources.GetString("Name"))
                 ;
 
             RuleFor(p => p.Email)
                 .NotEmpty()
                 .MaximumLength(100)
-                .WithName(ResourceLocalizer.GetString("E-mail Address"))
+                .WithName(DomainResources.GetString("E-mail Address"))
                 ;
+
+            RuleFor(p => p.Address).SetValidator(new AddressValidator());
+
+            RuleFor(p => p.Phones).Must(phones => phones.Count > 0)
+                .WithMessage(DomainResources.GetString("Must have at least one phone"));
+
+            RuleForEach(p => p.Phones).SetValidator(new PhoneValidator());
         }
     }
 }

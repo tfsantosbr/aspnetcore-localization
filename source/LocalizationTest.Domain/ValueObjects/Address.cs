@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using LocalizationTest.Domain.Helpers;
 using System.Collections.Generic;
 
 namespace LocalizationTest.Domain.ValueObjects
@@ -34,19 +33,22 @@ namespace LocalizationTest.Domain.ValueObjects
             RuleFor(p => p.StreetAddress)
                 .NotEmpty()
                 .MaximumLength(100)
-                .WithName(ResourceLocalizer.GetString("Street Address"))
+                .WithName(DomainResources.GetString("Address Street"))
+                //.OverridePropertyName("Address.Street")
                 ;
 
             RuleFor(p => p.Number)
                 .NotEmpty()
                 .MaximumLength(10)
-                .WithName(ResourceLocalizer.GetString("Address Number"))
+                .WithName(DomainResources.GetString("Address Number"))
+                //.OverridePropertyName("Address.Number")
                 ;
 
             RuleFor(p => p.City)
                 .NotEmpty()
                 .MaximumLength(50)
-                .WithName(ResourceLocalizer.GetString("Address City"))
+                .WithName(DomainResources.GetString("Address City"))
+                //.OverridePropertyName("Address.City")
                 ;
         }
     }

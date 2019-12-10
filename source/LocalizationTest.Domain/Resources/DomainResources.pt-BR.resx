@@ -123,14 +123,26 @@
   <data name="Address Number" xml:space="preserve">
     <value>Número do Endereço</value>
   </data>
+  <data name="Address Street" xml:space="preserve">
+    <value>Logradouro do Endereço</value>
+  </data>
   <data name="E-mail Address" xml:space="preserve">
     <value>Endereço de E-mail</value>
+  </data>
+  <data name="Must have at least one phone" xml:space="preserve">
+    <value>Deve ter pelo menos um telefone</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="Street Address" xml:space="preserve">
-    <value>Logradouro do Endereço</value>
+  <data name="Phone Area Code" xml:space="preserve">
+    <value>DDI do Telefone</value>
+  </data>
+  <data name="Phone Country Code" xml:space="preserve">
+    <value>DDD do Telefone</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Número do Telefone</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Nome do usuário</value>

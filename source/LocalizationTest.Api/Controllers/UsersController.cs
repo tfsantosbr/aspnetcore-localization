@@ -1,14 +1,12 @@
-﻿using LocalizationTest.Domain;
-using LocalizationTest.Domain.Helpers;
-using LocalizationTest.Domain.Users;
+﻿using LocalizationTest.Domain.Users;
 using LocalizationTest.Domain.Users.Models;
 using LocalizationTest.Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using System.Linq;
 
 namespace LocalizationTest.Api.Controllers
 {
+    [ApiController]
     [Route("users")]
     public class UsersController : Controller
     {
@@ -24,6 +22,11 @@ namespace LocalizationTest.Api.Controllers
                     city: createUser.Address.City
                     )
                 );
+
+            foreach (var phone in createUser.Phones)
+            {
+                user.AddPhone(new Phone(phone.AreaCode, phone.CountryCode, phone.Number));
+            }
 
             var validationsFailures = user.GetValidationErrors();
 
